@@ -162,24 +162,108 @@ C3.append([[[C,C,C],[a,o,a],[C,C,C]],[0.9]])
 
 A4 = []
 
-A4.append([[[C,C,C,C],[b,o,o,b],[C,C,C,C],[C,C,C,C]],[0.9]])
-A4.append([[[C,C,C,C],[C,o,o,C],[b,C,C,b],[C,C,C,C]],[0.9]])
-A4.append([[[b,C,C,C],[C,o,C,C],[C,C,o,C],[C,C,C,b]],[0.9]])
+A4.append([[[C,C,C,C],
+            [b,o,o,b],
+            [C,C,C,C],
+            [C,C,C,C]],[0.9]])
+A4.append([[[C,C,C,C],
+            [C,o,o,C],
+            [b,C,C,b],
+            [C,C,C,C]],[0.9]])
+A4.append([[
+            [b,C,C,C],
+            [C,o,C,C],
+            [C,C,o,C],
+            [C,C,C,b]],[0.9]])
+
+A5 = []
+
+A5.append([[[C,C,C,C,C],
+            [b,o,o,o,b],
+            [C,C,C,C,C],
+            [C,C,C,C,C],
+            [C,C,C,C,C]],[0.75]])
+
+A5.append([[[C,C,C,C,C],
+            [C,o,o,o,C],
+            [b,C,C,C,b],
+            [C,C,C,C,C],
+            [C,C,C,C,C]],[0.75]])
+
+A5.append([[[b,C,C,C,C],
+            [C,o,C,C,C],
+            [C,C,o,C,C],
+            [C,C,C,o,C],
+            [C,C,C,C,b]],[0.75]])
+
+A5.append([[[C,C,b,C,C],
+            [C,C,o,C,C],
+            [C,C,o,C,C],
+            [C,C,o,C,C],
+            [C,C,C,b,C]],[0.75]])
+
+A5.append([[[C,C,b,C,C],
+            [C,C,o,C,C],
+            [C,C,o,C,C],
+            [C,C,o,C,C],
+            [C,b,C,C,C]],[0.75]])
 
 
 A3 = []
 
-A3.append([[[b,C,C],[C,o,C],[C,C,b]],[1]])
-A3.append([[[C,C,C],[b,o,b],[C,C,C]],[1]])
-A3.append([[[C,C,C],[b,a,b],[C,o,C]],[1]])
-A3.append([[[C,C,b],[C,C,o],[C,b,C]],[1]])
-A3.append([[[C,C,b],[b,o,C],[C,C,C]],[1]])
-A3.append([[[b,C,C],[C,o,b],[C,C,C]],[1]])
+A3.append([[[b,C,C],
+            [C,o,C],
+            [C,C,b]],[1]])
+A3.append([[[C,C,C],
+            [b,o,b],
+            [C,C,C]],[1]])
+A3.append([[[C,C,C],
+            [b,a,b],
+            [C,o,C]],[1]])
+A3.append([[[C,C,b],
+            [C,C,o],
+            [C,b,C]],[1]])
+A3.append([[[C,C,b],
+            [b,o,C],
+            [C,C,C]],[1]])
+A3.append([[[b,C,C],
+            [C,o,b],
+            [C,C,C]],[1]])
+
+A3.append([[[b,C,C],
+            [o,C,C],
+            [C,b,C]],[1]])
+
+A3.append([[[C,C,b],
+            [C,C,o],
+            [C,b,C]],[1]])
 
 NTR = []
 
-NTR.append([[[R,S,C],[S,o,C],[C,C,C]],[-0.6]])
-NTR.append([[[S,S,S],[C,o,C],[C,C,C]],[-0.6]])
+NTR.append([[[R,S,C],
+            [S,o,C],
+            [C,C,C]],
+            [-0.6]])
+
+NTR.append([[[C,C,C],
+            [C,o,S],
+            [C,S,R]],
+            [-0.6]])
+
+NTR.append([[[C,S,R],
+            [C,o,S],
+            [C,C,C]],
+            [-0.6]])
+
+NTR.append([[[C,C,C],
+            [S,o,C],
+            [R,S,C]],
+            [-0.6]])
+
+NTR.append([[[S,S,S],
+            [C,o,C],
+            [C,C,C]]
+            ,[-0.6]])
 
 NT11 = []
 
@@ -522,28 +606,12 @@ def do4x4Matrix(tab, tabLen):
         elif(tabLen =="73"):
             Tabl.append(shrinkMatrix(a,b,i, tab[j],4))
         else:
-            print("elsek")
             Tabl.append(shrinkMatrix(a,b,i, tab[j],1))
            
         i+=1
         if i > SDown: i = 0
 
     return Tabl
-
-PR = makeOposP(TR)
-P11 = makeOposP(T11)
-P2 = makeOposP(T2)
-P3 = makeOposP(T3)
-P4 = makeOposP(T4)
-P42 = makeOposP(T42)
-P5 = makeOposP(T5)
-P45 = makeOposP(T45)
-P63 = makeOposP(T63)
-P7 = makeOposP(T7)
-
-C5 = makeOposP(C4)
-
-
 
 
 def arr_11(matrix):
@@ -881,17 +949,23 @@ def arr_c3(matrix):
 def arr_a4(matrix):
 
     matrix.append(rotateMatrix(matrix[0]))
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
     matrix.append(rotateMatrix(matrix[1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[2]))
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
+
+def arr_a5(matrix):
+
+    matrix.append(rotateMatrix(matrix[0]))
+    matrix.append(rotateMatrix(matrix[1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[2]))
     matrix.append(rotateMatrix(matrix[3]))
+    matrix.append(rotateMatrix(matrix[4]))
+   
 
 def arr_a3(matrix):
 
@@ -917,15 +991,20 @@ def arr_a3(matrix):
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
+    matrix.append(rotateMatrix(matrix[6]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[7]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
 
 def arr_ntr3(matrix):
 
-    matrix.append(rotateMatrix(matrix[0]))
+    
 
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
-    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
-
-    matrix.append(rotateMatrix(matrix[1]))
+    matrix.append(rotateMatrix(matrix[4]))
 
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
@@ -956,44 +1035,28 @@ def arr_tra(matrix):
 
 
 
-   
-
-
 T['T3x3r'] = []
-P['T3x3r'] = []
 
 for i in range(len(TR)):
     T['T3x3r'].append(TR[i])
 
-for i in range(len(PR)):
-    T['T3x3r'].append(PR[i])
-
 arr_11(T11)
-arr_11(P11)
 
 T['T3x3'] = []
 T['T3x3'].extend(T11)
-P['T3x3'] = []
-P['T3x3'].extend(P11)
 
 arr_2(T2)
-arr_2(P2)
 
 T['T4x4'] = []
 T['T4x4'].extend(T2)
-P['T4x4'] = []
-P['T4x4'].extend(P2)
+
 
 arr_3(T3)
-arr_3(P3)
 
 Temp44 = do4x4Matrix(T3,"43")
-Pemp44 = do4x4Matrix(P3,"43")
 
 T['T4x3'] = []
 T['T3x4'] = []
-P['T4x3'] = []
-P['T3x4'] = []
 
 for i in range(len(Temp44)):
     if len(Temp44[i][0]) == 4:
@@ -1001,23 +1064,13 @@ for i in range(len(Temp44)):
     elif len(Temp44[i][0]) == 3:
         T['T3x4'].append(Temp44[i])
 
-for i in range(len(Pemp44)):
-    if len(Pemp44[i][0]) == 4:
-        P['T4x3'].append(Pemp44[i])
-    elif len(Pemp44[i][0]) == 3:
-        P['T3x4'].append(Pemp44[i])
-
 
 arr_4(T4)
-arr_4(P4)
 
 Temp55 = do4x4Matrix(T4,"53")
-Pemp55 = do4x4Matrix(P4,"53")
 
 T['T3x5'] = []
 T['T5x3'] = []
-P['T3x5'] = []
-P['T5x3'] = []
 
 for i in range(len(Temp55)):
     if len(Temp55[i][0]) == 5:
@@ -1025,23 +1078,14 @@ for i in range(len(Temp55)):
     elif len(Temp55[i][0]) == 3:
         T['T3x5'].append(Temp55[i])
 
-for i in range(len(Pemp55)):
-    if len(Pemp55[i][0]) == 5:
-        P['T5x3'].append(Pemp55[i])
-    elif len(Pemp55[i][0]) == 3:
-        P['T3x5'].append(Pemp55[i])
 
 
 arr_42(T42)
-arr_42(P42)
 
 Temp42 = do4x4Matrix(T42,"42")
-Pemp42 = do4x4Matrix(P42,"42")
 
 T['T4x2'] = []
 T['T2x4'] = []
-P['T4x2'] = []
-P['T2x4'] = []
 
 for i in range(len(Temp42)):
     if len(Temp42[i][0]) == 4:
@@ -1049,45 +1093,20 @@ for i in range(len(Temp42)):
     elif len(Temp42[i][0]) == 2:
         T['T2x4'].append(Temp42[i])
 
-for i in range(len(Pemp42)):
-    if len(Pemp42[i][0]) == 4:
-        P['T4x2'].append(Pemp42[i])
-    elif len(Pemp42[i][0]) == 2:
-        P['T2x4'].append(Pemp42[i])
 
 arr_5(T5)
-arr_5(P5)
 
 Temp52 = do4x4Matrix(T5,"52")
-Pemp52 = do4x4Matrix(P5,"52")
 
 T['T5x2'] = []
 T['T2x5'] = []
-P['T5x2'] = []
-P['T2x5'] = []
-
-for i in range(len(Temp52)):
-    if len(Temp52[i][0]) == 5:
-        T['T5x2'].append(Temp52[i])
-    elif len(Temp52[i][0]) == 2:
-        T['T2x5'].append(Temp52[i])
-
-for i in range(len(Pemp52)):
-    if len(Pemp52[i][0]) == 5:
-        P['T5x2'].append(Pemp52[i])
-    elif len(Pemp52[i][0]) == 2:
-        P['T2x5'].append(Pemp52[i])
 
 arr_45(T45)
-arr_45(P45)
 
 Temp45 = do4x4Matrix(T45,"45")
-Pemp45 = do4x4Matrix(P45,"45")
 
 T['T4x5'] = []
 T['T5x4'] = []
-P['T4x5'] = []
-P['T5x4'] = []
 
 for i in range(len(Temp45)):
     if len(Temp45[i][0]) == 5:
@@ -1095,45 +1114,21 @@ for i in range(len(Temp45)):
     elif len(Temp45[i][0]) == 4:
         T['T4x5'].append(Temp45[i])
 
-for i in range(len(Pemp45)):
-    if len(Pemp45[i][0]) == 5:
-        P['T5x4'].append(Pemp45[i])
-    elif len(Pemp45[i][0]) == 4:
-        P['T4x5'].append(Pemp45[i])
 
 arr_63(T63)
-arr_63(P63)
+
 
 Temp63 = do4x4Matrix(T63,"63")
-Pemp63 = do4x4Matrix(P63,"63")
 
 T['T6x3'] = []
 T['T3x6'] = []
-P['T6x3'] = []
-P['T3x6'] = []
-
-for i in range(len(Temp63)):
-    if len(Temp63[i][0]) == 6:
-        T['T6x3'].append(Temp63[i])
-    elif len(Temp63[i][0]) == 3:
-        T['T3x6'].append(Temp63[i])
-
-for i in range(len(Pemp63)):
-    if len(Pemp63[i][0]) == 6:
-        P['T6x3'].append(Pemp63[i])
-    elif len(Pemp63[i][0]) == 3:
-        P['T3x6'].append(Pemp63[i])
 
 arr_7(T7)
-arr_7(P7)
 
 Temp73 = do4x4Matrix(T7,"73")
-Pemp73 = do4x4Matrix(P7,"73")
 
 T['T7x3'] = []
 T['T3x7'] = []
-P['T7x3'] = []
-P['T3x7'] = []
 
 for i in range(len(Temp73)):
     if len(Temp73[i][0]) == 7:
@@ -1141,17 +1136,12 @@ for i in range(len(Temp73)):
     elif len(Temp73[i][0]) == 3:
         T['T3x7'].append(Temp73[i])
 
-for i in range(len(Pemp73)):
-    if len(Pemp73[i][0]) == 7:
-        P['T7x3'].append(Pemp73[i])
-    elif len(Pemp73[i][0]) == 3:
-        P['T3x7'].append(Pemp73[i])
-
 
 arr_c4(C4)
 arr_c3(C3)
 
 arr_a4(A4)
+arr_a5(A5)
 arr_a3(A3)
 
 arr_ntr3(NTR)
@@ -1173,8 +1163,6 @@ for i in range(len(Bemp42)):
     if len(Bemp42[i][0]) == 2:
         BA['TBT4x2'].append(Bemp42[i])
 
-#printDataM(BA['TBT4x2'])
-
 BA['TBD4x2'] = []
 
 Bemp42 = do4x4Matrix(BD42,"42")
@@ -1182,8 +1170,6 @@ Bemp42 = do4x4Matrix(BD42,"42")
 for i in range(len(Bemp42)):
     if len(Bemp42[i][0]) == 2:
         BA['TBD4x2'].append(Bemp42[i])
-
-#printDataM(BA['TBD4x2'])
 
 BA['TBL4x2'] = []
 
@@ -1194,7 +1180,6 @@ for i in range(len(Bemp42)):
         BA['TBL4x2'].append(Bemp42[i])
 
 #printDataM(BA['TBL4x2'])
-
 
 BA['TBR4x2'] = []
 
