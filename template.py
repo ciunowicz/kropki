@@ -16,52 +16,21 @@ R = 8
 DP = a
 
 T1 = []
-
 BA = {}
-
 TR = []
 
-TR.append([[
-    [R,S,C],
-    [S,a,B],
-    [C,o,C]],[0.9]])
-TR.append([[
-    [R,S,C],
-    [S,a,o],
-    [C,B,C]],[0.9]])
-TR.append([
-    [[C,o,C],
-    [B,a,S]
-    ,[C,S,R]],[0.9]])
-TR.append([[
-    [C,B,C]
-    ,[o,a,S]
-    ,[C,S,R]],[0.9]])
-TR.append([[
-    [C,S,R],
-    [B,a,S],
-    [C,o,C]],[0.9]])
-TR.append([[
-    [C,S,R],
-    [o,a,S],
-    [C,B,C]],[0.9]])
-TR.append([[
-    [C,B,C],
-    [S,a,o],
-    [R,S,C]],[0.9]])
-TR.append([
-    [[C,o,C],
-    [S,a,B],
-    [R,S,C]],[0.9]])
-
-
-
+TR.append([[[R,S,C],[S,a,B],[C,o,C]],[0.9]])
+TR.append([[[R,S,C],[S,a,o],[C,B,C]],[0.9]])
+TR.append([[[C,o,C],[B,a,S],[C,S,R]],[0.9]])
+TR.append([[[C,B,C],[o,a,S],[C,S,R]],[0.9]])
+TR.append([[[C,S,R],[B,a,S],[C,o,C]],[0.9]])
+TR.append([[[C,S,R],[o,a,S],[C,B,C]],[0.9]])
+TR.append([[[C,B,C],[S,a,o],[R,S,C]],[0.9]])
+TR.append([[[C,o,C],[S,a,B],[R,S,C]],[0.9]])
 TR.append([[[C,o,0],[0,a,S],[C,S,R]],[0.7]])
 TR.append([[[C,S,R],[o,a,S],[C,0,C]],[0.7]])
 TR.append([[[C,o,C],[S,a,0],[R,S,C]],[0.7]])
 TR.append([[[R,S,C],[S,a,0],[C,o,C]],[0.7]])
-
-
 
 T11 = []
 #3x3
@@ -75,9 +44,6 @@ T11.append([[[C,C,a],[B,o,B],[C,a,C]],[0.05]])
 T11.append([[[C,a,C],[B,b,o],[C,a,C]],[0.1]])
 T11.append([[[C,b,a],[C,o,b],[C,a,C]],[0.9]])
 T11.append([[[a,b,C],[b,o,C],[C,C,a]],[0.1]])
-""" T11.append([[[C,b,C],[b,o,b],[C,C,C]],[-0.5]])
-T11.append([[[C,C,C],[a,o,C],[a,a,C]],[-0.5]])
-T11.append([[[C,C,C],[o,a,C],[a,a,C]],[-0.5]]) """
 T11.append([[[a,C,C],[B,o,B],[C,a,C]],[0.05]])
 T11.append([[[a,b,C],[b,o,C],[C,a,C]],[0.8]])
 T11.append([[[C,a,C],[a,b,o],[C,a,C]],[0.7]])
@@ -94,13 +60,7 @@ T11.append([[[0,o,0],[0,a,0],[0,a,0]],[0.7]])
 T11.append([[[b,o,b],[b,a,B],[b,0,b]],[0.8]])
 T11.append([[[a,b,a],[b,b,o],[a,a,b]],[0.6]])
 T11.append([[[a,b,a],[o,b,b],[a,a,b]],[0.6]])
-T11.append([[
-            [C,o,C],
-            [b,a,b],
-            [C,b,C]]
-            ,[0.8]])
-
-
+T11.append([[[C,o,C],[b,a,b],[C,b,C]],[0.8]])
 
 T2 = []
 #4x4
@@ -132,7 +92,6 @@ T3.append([[[C,a,C,0],[b,b,o,0],[a,b,a,0],[a,b,a,0]],[0.8]])
 T3.append([[[0,o,0,0],[b,A,B,0],[b,A,b,0],[0,b,0,0]],[0.6]])
 T3.append([[[0,o,0,0],[B,A,b,0],[b,A,b,0],[0,b,0,0]],[0.6]])
 
-
 T4 = []
 
 T4.append([[[C,a,C,0,0],[C,0,C,0,0],[B,o,B,0,0],[C,0,C,0,0],[C,a,C,0,0]],[0.05]])
@@ -144,7 +103,6 @@ T4.append([[[C,a,C,0,0],[0,0,C,0,0],[o,b,B,0,0],[0,0,C,0,0],[C,a,C,0,0]],[0.1]])
 T4.append([[[C,a,C,0,0],[0,0,C,0,0],[0,0,C,0,0],[o,b,B,0,0],[C,a,C,0,0]],[0.2]])
 T4.append([[[C,a,C,0,0],[C,a,C,0,0],[C,a,C,0,0],[C,a,C,0,0],[C,o,C,0,0]],[0.5]])
 T4.append([[[C,o,C,0,0],[C,b,C,0,0],[C,b,a,0,0],[a,b,a,0,0],[C,a,C,0,0]],[0.3]])
-
 
 T42 = []
 
@@ -173,7 +131,6 @@ T63.append([[[C,a,C,0,0,0],[C,0,C,0,0,0],[B,o,B,0,0,0],[C,0,C,0,0,0],[C,0,C,0,0,
 T63.append([[[C,a,C,0,0,0],[C,0,0,0,0,0],[C,0,0,0,0,0],[B,b,o,0,0,0],[C,0,0,0,0,0],[C,a,C,0,0,0]],[0.1]])
 T63.append([[[C,a,C,0,0,0],[0,0,C,0,0,0],[0,0,C,0,0,0],[o,b,B,0,0,0],[0,0,C,0,0,0],[C,a,C,0,0,0]],[0.1]])
 
-
 T7 = []
 
 T7.append([[[C,a,C,0,0,0,0],[C,0,C,0,0,0,0],[C,0,C,0,0,0,0],[B,o,B,0,0,0,0],[C,0,C,0,0,0,0],[C,0,C,0,0,0,0],[C,a,C,0,0,0,0]],[0.05]])
@@ -187,175 +144,65 @@ C4.append([[[a,C,C,C],[C,o,C,C],[C,C,o,C],[C,C,C,a]],[0.9]])
 
 C3 = []
 
-C3.append([[
-    [a,C,C],
-    [C,o,C],
-    [C,C,a]],[0.9]])
-C3.append([[
-    [C,C,C],
-    [a,b,a],
-    [C,o,C]],[0.9]])
-C3.append([[
-    [C,C,a],
-    [C,C,o],
-    [C,a,C]],[0.9]])
-C3.append([[
-    [a,C,C],
-    [C,o,C],
-    [C,a,C]],[0.9]])
-
-C3.append([[
-    [a,C,C],
-    [o,C,C],
-    [C,a,C]],[0.9]])
-C3.append([
-    [[C,C,C],
-    [a,o,a],
-    [C,C,C]],
-    [0.9]])
-
-
+C3.append([[[a,C,C],[C,o,C],[C,C,a]],[0.9]])
+C3.append([[[C,C,C],[a,b,a],[C,o,C]],[0.9]])
+C3.append([[[C,C,a],[C,C,o],[C,a,C]],[0.9]])
+C3.append([[[a,C,C],[C,o,C],[C,a,C]],[0.9]])
+C3.append([[[a,C,C],[o,C,C],[C,a,C]],[0.9]])
+C3.append([[[C,C,C],[a,o,a],[C,C,C]],[0.9]])
 
 A4 = []
 
-A4.append([[[C,C,C,C],
-            [b,o,o,b],
-            [C,C,C,C],
-            [C,C,C,C]],[0.9]])
-A4.append([[[C,C,C,C],
-            [C,o,o,C],
-            [b,C,C,b],
-            [C,C,C,C]],[0.9]])
-A4.append([[
-            [b,C,C,C],
-            [C,o,C,C],
-            [C,C,o,C],
-            [C,C,C,b]],[0.9]])
+A4.append([[[C,C,C,C],[b,o,o,b],[C,C,C,C],[C,C,C,C]],[0.9]])
+A4.append([[[C,C,C,C],[C,o,o,C],[b,C,C,b],[C,C,C,C]],[0.9]])
+A4.append([[[b,C,C,C],[C,o,C,C],[C,C,o,C],[C,C,C,b]],[0.9]])
 
 A5 = []
 
-A5.append([[[C,C,C,C,C],
-            [b,o,o,o,b],
-            [C,C,C,C,C],
-            [C,C,C,C,C],
-            [C,C,C,C,C]],[0.75]])
-
-A5.append([[[C,C,C,C,C],
-            [C,o,o,o,C],
-            [b,C,C,C,b],
-            [C,C,C,C,C],
-            [C,C,C,C,C]],[0.75]])
-
-A5.append([[[b,C,C,C,C],
-            [C,o,C,C,C],
-            [C,C,o,C,C],
-            [C,C,C,o,C],
-            [C,C,C,C,b]],[0.75]])
-
-A5.append([[[C,C,b,C,C],
-            [C,C,o,C,C],
-            [C,C,o,C,C],
-            [C,C,o,C,C],
-            [C,C,C,b,C]],[0.75]])
-
-A5.append([[[C,C,b,C,C],
-            [C,C,o,C,C],
-            [C,C,o,C,C],
-            [C,C,o,C,C],
-            [C,b,C,C,C]],[0.75]])
-
-A5.append([[[C,C,b,C,C],
-            [C,C,o,C,C],
-            [C,C,b,C,C],
-            [C,C,o,C,C],
-            [C,C,b,C,C]],[0.75]])
-
-A5.append([[[b,C,C,C,C],
-            [C,o,C,C,C],
-            [C,C,b,C,C],
-            [C,C,C,o,C],
-            [C,C,C,C,b]],[0.75]])
-
-A5.append([[[C,C,b,C,C],
-            [C,C,C,o,C],
-            [C,C,C,C,b],
-            [C,C,C,o,C],
-            [C,C,b,C,C]],[0.75]])
-
-A5.append([[[C,o,b,o,C],
-            [b,C,C,C,b],
-            [C,C,C,C,C],
-            [C,C,C,C,C],
-            [C,C,C,C,C]],[0.75]])
-
+A5.append([[[C,C,C,C,C],[b,o,o,o,b],[C,C,C,C,C],[C,C,C,C,C],[C,C,C,C,C]],[0.75]])
+A5.append([[[C,C,C,C,C],[C,o,o,o,C],[b,C,C,C,b],[C,C,C,C,C],[C,C,C,C,C]],[0.75]])
+A5.append([[[b,C,C,C,C],[C,o,C,C,C],[C,C,o,C,C],[C,C,C,o,C],[C,C,C,C,b]],[0.75]])
+A5.append([[[C,C,b,C,C],[C,C,o,C,C],[C,C,o,C,C],[C,C,o,C,C],[C,C,C,b,C]],[0.75]])
+A5.append([[[C,C,b,C,C],[C,C,o,C,C],[C,C,o,C,C],[C,C,o,C,C],[C,b,C,C,C]],[0.75]])
+A5.append([[[C,C,b,C,C],[C,C,o,C,C],[C,C,b,C,C],[C,C,o,C,C],[C,C,b,C,C]],[0.75]])
+A5.append([[[b,C,C,C,C],[C,o,C,C,C],[C,C,b,C,C],[C,C,C,o,C],[C,C,C,C,b]],[0.75]])
+A5.append([[[C,C,b,C,C],[C,C,C,o,C],[C,C,C,C,b],[C,C,C,o,C],[C,C,b,C,C]],[0.75]])
+A5.append([[[C,o,b,o,C],[b,C,C,C,b],[C,C,C,C,C],[C,C,C,C,C],[C,C,C,C,C]],[0.75]])
 
 A3 = []
 
-A3.append([[[b,C,C],
-            [C,o,C],
-            [C,C,b]],[1]])
-A3.append([[[C,C,C],
-            [b,o,b],
-            [C,C,C]],[1]])
-A3.append([[[C,C,C],
-            [b,a,b],
-            [C,o,C]],[1]])
-A3.append([[[C,C,b],
-            [C,C,o],
-            [C,b,C]],[1]])
-A3.append([[[C,C,b],
-            [b,o,C],
-            [C,C,C]],[1]])
-A3.append([[[b,C,C],
-            [C,o,b],
-            [C,C,C]],[1]])
+A3.append([[[b,C,C],[C,o,C],[C,C,b]],[1]])
+A3.append([[[C,C,C],[b,o,b],[C,C,C]],[1]])
+A3.append([[[C,C,C],[b,a,b],[C,o,C]],[1]])
+A3.append([[[C,C,b],[C,C,o],[C,b,C]],[1]])
+A3.append([[[C,C,b],[b,o,C],[C,C,C]],[1]])
+A3.append([[[b,C,C],[C,o,b],[C,C,C]],[1]])
+A3.append([[[b,C,C],[o,C,C],[C,b,C]],[1]])
+A3.append([[[C,C,b],[C,C,o],[C,b,C]],[1]])
 
-A3.append([[[b,C,C],
-            [o,C,C],
-            [C,b,C]],[1]])
+A3TR = []
 
-A3.append([[[C,C,b],
-            [C,C,o],
-            [C,b,C]],[1]])
+A3TR.append([[[R,S,C],[S,o,C],[C,C,b]],[0.4]])
+A3TR.append([[[R,S,C],[S,o,b],[C,C,C]],[0.4]])
+A3TR.append([[[S,C,C],[S,o,b],[S,C,C]],[0.4]])
+A3TR.append([[[S,o,b],[S,C,C],[S,C,C]],[0.4]])
+A3TR.append([[[S,C,C],[S,C,C],[S,o,b]],[0.4]])
 
 NTR = []
 
-NTR.append([[[R,S,C],
-            [S,o,C],
-            [C,C,C]],
-            [0]])
-
-NTR.append([[[C,C,C],
-            [C,o,S],
-            [C,S,R]],
-            [0]])
-
-NTR.append([[[C,S,R],
-            [C,o,S],
-            [C,C,C]],
-            [0]])
-
-NTR.append([[[C,C,C],
-            [S,o,C],
-            [R,S,C]],
-            [0]])
-
-NTR.append([[[S,S,S],
-            [C,o,C],
-            [C,C,C]]
-            ,[0]])
-
-NTR.append([[[R,S,R],
-            [S,o,S],
-            [C,C,C]]
-            ,[0]])
-
+NTR.append([[[R,S,C],[S,o,C],[C,C,C]],[0]])
+NTR.append([[[C,C,C],[C,o,S],[C,S,R]],[0]])
+NTR.append([[[C,S,R],[C,o,S],[C,C,C]],[0]])
+NTR.append([[[C,C,C],[S,o,C],[R,S,C]],[0]])
+NTR.append([[[S,S,S],[C,o,C],[C,C,C]],[0]])
+NTR.append([[[R,S,R],[S,o,S],[C,C,C]],[0]])
+NTR.append([[[C,S,C],[S,o,S],[C,S,C]],[0.0]])
+NTR.append([[[R,S,R],[S,o,S],[C,S,C]],[0.0]])
 
 NT11 = []
 
-NT11.append([[[C,C,C],[b,o,B],[b,b,B]],[-0.5]])
-
-NT11.append([[[C,b,C],[b,o,b],[C,b,C]],[-0.5]])
+NT11.append([[[C,C,C],[b,o,B],[b,b,B]],[0]])
+NT11.append([[[C,b,C],[b,o,b],[C,b,C]],[0]])
 
 BT42 = []
 
@@ -392,11 +239,7 @@ BL42.append([[[a,C,0,0],[a,C,0,0],[a,C,0,0],[o,C,0,0]],[0.6]])
 
 TRA1 = []
 
-TRA1.append([[[0,0,0,0],
-                [0,0,b,0],
-                [0,o,0,0],
-                [0,0,0,0]]
-                ,[0.1]])
+TRA1.append([[[0,0,0,0],[0,0,b,0],[0,o,0,0],[0,0,0,0]],[0.1]])
 
 TRA = []
 
@@ -407,37 +250,22 @@ TRA.append([[[0,o,0],[b,0,b],[0,b,0]],[0.3]])
 
 SP = []
 
-SP.append([[[C,S,R],
-            [o,b,S],
-            [C,a,C]]
-            ,[0.8]])
-
-SP.append([[[C,S,R],
-            [a,b,S],
-            [C,o,C]]
-            ,[0.8]])
+SP.append([[[C,S,R],[o,b,S],[C,a,C]],[0]])
+SP.append([[[C,S,R],[a,b,S],[C,o,C]],[0]])
+SP.append([[[C,S,C],[S,o,S],[C,S,C]],[0.0]])
+SP.append([[[R,S,R],[S,o,S],[C,S,C]],[0.0]])
+SP.append([[[C,a,C],[a,o,a],[C,a,C]],[0.0]])
 
 CR = []
 
-CR.append([[[C,C,C,C],
-            [C,o,o,C],
-            [S,A,a,S],
-            [R,S,S,R]]
-            ,[0.7]])
-
-CR.append([[[C,C,C,C],
-            [C,o,o,C],
-            [S,a,A,S],
-            [R,S,S,R]]
-            ,[0.7]])
-
+CR.append([[[C,C,C,C],[C,o,o,C],[S,A,a,S],[R,S,S,R]],[0.7]])
+CR.append([[[C,C,C,C],[C,o,o,C],[S,a,A,S],[R,S,S,R]],[0.7]])
 
 
 SRight = 0
 STop = 1
 SLeft = 2
 SDown = 3
-
 
 def makeOposP(arr_tmp):
     tszab = []
@@ -462,10 +290,6 @@ def makeOposP(arr_tmp):
         tszab.append(tmp)
    
     return tszab
-
-
-
-
 
 def printDataM(matrix):
 
@@ -1135,21 +959,49 @@ def arr_a3(matrix):
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
 
-def arr_ntr3(matrix):
+def arr_a3tr(matrix):
 
+    matrix.append(rotateMatrix(matrix[0]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
    
+    matrix.append(rotateMatrix(matrix[2]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[3]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
     matrix.append(rotateMatrix(matrix[4]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
+
+
+def arr_ntr3(matrix):
+ 
+
+    matrix.append(rotateMatrix(matrix[4]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
    
     matrix.append(rotateMatrix(matrix[5]))
-
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
- 
+    matrix.append(rotateMatrix(matrix[6]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[7]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+
+
 
 def arr_nt11(matrix):
 
@@ -1184,6 +1036,16 @@ def arr_sp(matrix):
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
 
     matrix.append(rotateMatrix(matrix[1]))
+
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[2]))
+
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+    matrix.append(rotateMatrix(matrix[len(matrix)-1]))
+
+    matrix.append(rotateMatrix(matrix[3]))
 
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
     matrix.append(rotateMatrix(matrix[len(matrix)-1]))
@@ -1313,8 +1175,10 @@ arr_c3(C3)
 arr_a4(A4)
 arr_a5(A5)
 arr_a3(A3)
+arr_a3tr(A3TR)
 
 arr_ntr3(NTR)
+
 arr_nt11(NT11)
 
 arrbt_42(BT42)

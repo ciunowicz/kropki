@@ -2,14 +2,13 @@ import pygame, sys
 from pygame.locals import *
 import copy
 import random
-from template import T, C4, C3, A4, A3, A5, NTR, NT11, TR, TRA, TRA1, BA, ATR, SP, CR
+from template import T, C4, C3, A4, A3, A5, NTR, NT11, TR, TRA, TRA1, BA, ATR
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0,0,255)
-# usunąć tablice z circuits jeśli okrąży się kopki które były okrążone
 
 Player1Color = BLUE
 Player2Color = RED
@@ -35,7 +34,7 @@ COLS = 21
 ROWS = 21
 (TOP, RIGHT, DOWN, LEFT) = 1,2,3,4
 
-grid, arr_tmp, tszc4, tszc3, tsza4,  tsza5, tsza3, tszn3, tsznr, tsztra, tsztra1, tszatr, tszsp, tszcr = ([] for i in range(14))
+grid, arr_tmp, tszc4, tszc3, tsza4,  tsza5, tsza3, tszn3, tsznr, tsztra, tsztra1, tszatr = ([] for i in range(12))
 tszbl4G2, tszbr4G2, tszbt4G2, tszbd4G2, pointDoNotPut = ([] for i in range(5))
 
 tszdic = {'T3x3r': '3,3','T3x3': '3,3','T4x4': '4,4','T4x2': '4,2','T2x4': '2,4','T3x4': '3,4','T4x3': '4,3','T5x2': '5,2',
@@ -877,7 +876,6 @@ def addScore(szb1, szb2, poi, matrix):
 
                         matrixP = getcordDP(szb2, p1, p2)
                        
-                       
                         pointlist.append(matrixP)
 
                     point.append(pointlist)
@@ -1224,14 +1222,9 @@ def setTemplateScore(boardPlayer,player):
         doBoardSzabBand(boardPlayer, 4, 2, tszbr4G2,scorePoints[player], RIGHT)
         doBoardSzabBand(boardPlayer, 2, 4, tszbt4G2,scorePoints[player], TOP)
         doBoardSzabBand(boardPlayer, 2, 4, tszbd4G2,scorePoints[player], DOWN)
-        doBoardSzab(boardPlayer, 3, 3, tszsp,scorePoints[player],True, True)
-        doBoardSzab(boardPlayer, 4, 4, tszcr,scorePoints[player],True)
 
     else:
         doBoardSzab(boardPlayer, 3, 3, tszatr,scorePoints[player],True)
-
-   
-
 
 
 def BotCircuits(player,cpy_board,x,y):
@@ -1260,7 +1253,7 @@ def BotCircuits(player,cpy_board,x,y):
 
             tb = dot[0]
             if arr_b[tb[0]][tb[1]] == player:
-                arr_b[dot[tb[0]]][tb[1]] = 0
+                arr_b[tb[0]][tb[1]] = 0
        
        
         if i == 0:
@@ -1398,7 +1391,39 @@ def addNegScore(arr_cpy):
    
     return scPoints
 
+def neighbourCircle(arr_cpy, col, x1, y1):
+    circle2 = []
+   
+    for i in range(4):
+                                                     
+        if i == 0 and x1 - 1 >= 0 and arr_cpy[x1-1][y1] == 0:
+            arr_cpy[x1-1][y1] = col
+            circle2 = BotCircuits(col,arr_cpy,x1-1,y1)      
+            arr_cpy[x1-1][y1] = 0
+                       
 
+        if i == 1 and x1 + 1 < ROWS-1 and arr_cpy[x1+1][y1] == 0:
+            arr_cpy[x1+1][y1] = col
+            circle2 = BotCircuits(col,arr_cpy,x1+1,y1)
+            arr_cpy[x1+1][y1] = 0
+                               
+
+        if i == 2 and y1 - 1 >= 0 and arr_cpy[x1][y1-1] == 0:
+            arr_cpy[x1][y1-1] = col
+            circle2 = BotCircuits(col,arr_cpy,x1,y1-1)
+            arr_cpy[x1][y1-1] = 0
+                               
+
+        if i == 3 and y1 + 1 < COLS-1 and  arr_cpy[x1][y1+1] == 0:
+            arr_cpy[x1][y1+1] = col
+            circle2 = BotCircuits(col,arr_cpy,x1,y1+1)
+            arr_cpy[x1][y1+1] = 0
+
+        if circle2:
+            return circle2
+   
+
+    return []
 
 def findCirc(arr_cpy,player, scorep):
 
@@ -1426,7 +1451,7 @@ def findCirc(arr_cpy,player, scorep):
                     circle = BotCircuits(player,arr_cpy,x2,y2)
            
                     if circle:
-                       
+                        
                         tab = []
                         sc = len(circle)
                         #to jest szablon
@@ -1449,7 +1474,6 @@ def findCirc(arr_cpy,player, scorep):
                
                 elif isinstance(pt[0][0], list) and len(pt[0]) == 3:
 
-                    #print("Jest Lysta 3 player", player, " punkty", pt[0])
                     tmpx = pt[0][0]
                     tmpx2 = pt[0][1]
                     tmpx3 = pt[0][2]
@@ -1474,7 +1498,6 @@ def findCirc(arr_cpy,player, scorep):
                            
            
                     if circle:
-                        #print("Jest Lysta 3 okrąż ", player)
                         tab = []
                         sc = len(circle)
                         #to jest szablon
@@ -1503,54 +1526,24 @@ def findCirc(arr_cpy,player, scorep):
 
                     if circle:
                         tab[1] = len(circle)
+                        
                         col = player
                         if player == Player2:
                             col = Player1
 
-                        a1 = b1 = -1
+                        
                         circle2 = []
                         arr_cpy[x1][y1] = 0
-                        for i in range(4):
-                               
+                        circle2 = neighbourCircle(arr_cpy, col, x1, y1)
                            
-                            if i == 0 and x1 - 1 >= 0 and arr_cpy[x1-1][y1] == 0:
-                                arr_cpy[x1-1][y1] = col
-                                circle2 = BotCircuits(col,arr_cpy,x1-1,y1)
-                                a1 = x1-1
-                                b1 = y1
-                                arr_cpy[x1-1][y1] = 0
-                       
-
-                            if i == 1 and x1 + 1 < ROWS-1 and arr_cpy[x1+1][y1] == 0:
-                                arr_cpy[x1+1][y1] = col
-                                circle2 = BotCircuits(col,arr_cpy,x1+1,y1)
-                                a1 = x1+1
-                                b1 = y1
-                                arr_cpy[x1+1][y1] = 0
-                               
-
-                            if i == 2 and y1 - 1 >= 0 and arr_cpy[x1][y1-1] == 0:
-                                arr_cpy[x1][y1-1] = col
-                                circle2 = BotCircuits(col,arr_cpy,x1,y1-1)
-                                a1 = x1
-                                b1 = y1-1
-                                arr_cpy[x1][y1-1] = 0
-                               
-
-                            if i == 3 and y1 + 1 < COLS-1 and  arr_cpy[x1][y1+1] == 0:
-                                arr_cpy[x1][y1+1] = col
-                                circle2 = BotCircuits(col,arr_cpy,x1,y1+1)
-                                a1 = x1
-                                b1 = y1+1
-                                arr_cpy[x1][y1+1] = 0
-                               
+                        if circle2:
                            
-                            if circle2:
-                           
-                                tab[1] = 0
-                                for key in circle2:
-                                    setZeroScore(scorep,key[0],key[1])
-                               
+                            tab[1] = 0
+                            for key in circle2:
+                                setZeroScore(scorep,key[0],key[1])
+                                
+
+                            #-------
                         scorep.append(tab)        
                                        
                    
@@ -1597,24 +1590,16 @@ def moveBot(player):
     scoreNeg = addNegScore(arr_tmp)
 
 
-    def pointINScore(arr):
-        nonlocal row, column, suma
+    def trap_or_rand(scNeg):
 
-        if [row,column] in arr and suma < 1:
-           
-            return True
+        (row,column,sum1) = findTra()
+        if row < 0:
+            (row, column) = randomWs()
+            if [row,column] in scNeg:
+                (row, column) = randomWs()
        
-        return False
+        return [row, column]
 
-
-    def newScore():
-        nonlocal row, column, suma
-
-        setLessScore(sc,row, column, 0.9)
-        scWs = getmaxScoreWs(arr_tmp,player)
-        column = scWs[1]
-        row = scWs[0]
-        suma = float(scWs[2])
 
     scWs = getmaxScoreWs(arr_tmp,player)
     column = scWs[1]
@@ -1623,45 +1608,26 @@ def moveBot(player):
     templatek = scWs[3]
    
    
-   
-    randNum = False
-   
-    if [row,column] in scoreNeg and suma < 1.0:
-        
+    if [row,column] in scoreNeg and suma < 0.6:
+       
         setLessScore(sc,row, column, 0.0)
         scWs = getmaxScoreWs(arr_tmp,player)
         column = scWs[1]
         row = scWs[0]
         suma = float(scWs[2])
         templatek = scWs[3]
-   
 
     if row < 0 or not canMove(row,column):
                              
         # jeśli nie ma na szablonach losowo
-   
-        #wynik 0 współrzędne losow
-        (row,column,sum1) = findTra()
-       
-        if row < 0:
-            (row, column) = randomWs()
-            if [row,column] in scoreNeg:
-                (row, column) = randomWs()
-        randNum = True
+
+        (row, column) = trap_or_rand(scoreNeg)
    
     playerbot = Player2 if player == Player1 else Player1
     tab = []
-
-    if randNum:
-        circle = circleFillBot(arr_tmp, row, column, playerbot, tab)
-        if circle:
-            (row,column,sum1) = findTra()
-            if row < 0:
-                (row, column) = randomWs()
-                if [row,column] in scoreNeg:
-                    (row, column) = randomWs()
                
     return [row,column]
+
 
 
 init()
@@ -1692,9 +1658,6 @@ makeSzablon2(BA['TBD4x2'],tszbd4G2)
 
 makeSzablon2(TRA,tsztra)
 makeSzablon2(TRA1,tsztra1)
-makeSzablon2(SP,tszsp)
-
-makeSzablon2(CR,tszcr)
 
 
  
@@ -1789,7 +1752,7 @@ while True: # main loop
                     setTemplateScore(board,Player2)
                     Player = Player1          
                     #Player = Player2 if Player == Player1 else Player1
-                   
+                    #print(ListCIPS)
                    
 
     pygame.display.update()
