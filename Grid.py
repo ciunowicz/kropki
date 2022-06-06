@@ -2,7 +2,8 @@ import pygame, sys
 from pygame.locals import *
 import copy
 import random
-from template import T, C4, C3, A4, A3, A5, NTR, NT11, TR, TRA, TRA1, BA, ATR
+from template import T, A3, NTR, NT11, TR, TRA, TRA1, BA, ATR, CB2
+#, CBR2
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -34,8 +35,11 @@ COLS = 21
 ROWS = 21
 (TOP, RIGHT, DOWN, LEFT) = 1,2,3,4
 
-grid, arr_tmp, tszc4, tszc3, tsza4,  tsza5, tsza3, tszn3, tsznr, tsztra, tsztra1, tszatr = ([] for i in range(12))
+grid, arr_tmp, tszn3, tsznr, tsztra, tsztra1, tszatr = ([] for i in range(7))
 tszbl4G2, tszbr4G2, tszbt4G2, tszbd4G2, pointDoNotPut = ([] for i in range(5))
+tszb2 = []
+tszbr2 = []
+
 
 tszdic = {'T3x3r': '3,3','T3x3': '3,3','T4x4': '4,4','T4x2': '4,2','T2x4': '2,4','T3x4': '3,4','T4x3': '4,3','T5x2': '5,2',
             'T2x5': '2,5','T4x5': '4,5','T5x4': '5,4','T5x3': '5,3','T3x5': '3,5','T6x3': '6,3','T3x6': '3,6','T7x3': '7,3','T3x7': '3,7'}
@@ -114,7 +118,7 @@ def delSepPoint(matrix, delePiontsArr, player):
                 if(i > 0 and matrix[i-1][j] == player): point+=1
                 if(i < ROWS-1 and matrix[i+1][j] == player): point+=1
                 if(j > 0 and matrix[i][j-1] == player): point+=1
-                if(j < COLS-1 and matrix[i][j+1] == player): point+=1 
+                if(j < COLS-1 and matrix[i][j+1] == player): point+=1
 # diagonal
                 if(i > 0 and j > 0 and matrix[i-1][j-1] == player): point+=1
                 if(i < ROWS-1 and j < COLS-1 and matrix[i+1][j+1] == player): point+=1
@@ -338,6 +342,7 @@ def circleFill(a,b, player, matrix_point):
             Krop = delDuplicate(listaKrop)
 
             ListAllPS.extend(Krop)
+            ListCPS[player].extend(Krop)
             ListCIPS[player].extend(Krop)
             ListCIPS[player] = delDuplicate(ListCIPS[player])
             delListCIPSP(player)
@@ -864,21 +869,21 @@ def addScore(szb1, szb2, poi, matrix):
                    
                     pointlist = []
 
+                   
+
                     for i in range(len(dtpoints)):
                         tp = dtpoints[i]
                        
-                         
-
 
                         p1 = tp[0]
                         p2 = tp[1]
-                       
-
                         matrixP = getcordDP(szb2, p1, p2)
                        
                         pointlist.append(matrixP)
 
+
                     point.append(pointlist)
+                   
                
                 point.extend([dtscore])
                 point.append(szb1)
@@ -900,7 +905,7 @@ def skipSzabLessPoint(szab, rogi):
         if licz < count:
             return True
         else:
-            return 
+            return
            
 
 def delDuplop(points, scPoints):
@@ -956,7 +961,7 @@ def doBoardSzab(board_player, szablon_size_row, szablon_size_col, matrix,scPoint
 
 
     if ROWS % szablon_size_row  != 0:
-        i = ROWS - szablon_size_row 
+        i = ROWS - szablon_size_row
         for j in range(COLS - szablon_size_col + 1):
             tszb = [[0 for x in range(szablon_size_col)] for y in range(szablon_size_row)]        
             tab_b = [[[] for x in range(szablon_size_col)] for y in range(szablon_size_row)]
@@ -995,7 +1000,7 @@ def doBoardSzabBand(board_player, szablon_size_row, szablon_size_col, matrix, sc
    
     # góra
     if direction == TOP:
-        i = 0 
+        i = 0
         for j in range(COLS - szablon_size_col + 1):
             tszb = [[0 for x in range(szablon_size_col)] for y in range(szablon_size_row)]        
             tab_b = [[[] for x in range(szablon_size_col)] for y in range(szablon_size_row)]
@@ -1023,7 +1028,7 @@ def doBoardSzabBand(board_player, szablon_size_row, szablon_size_col, matrix, sc
  
     #lewo
     if direction == LEFT:
-        j  = 0 
+        j  = 0
         for i in range(ROWS - szablon_size_row + 1):
             tszb = [[0 for x in range(szablon_size_col)] for y in range(szablon_size_row)]        
             tab_b = [[[] for x in range(szablon_size_col)] for y in range(szablon_size_row)]
@@ -1202,7 +1207,7 @@ def circleFillBot(array_b, a,b, player, matrix_p):
 def setTemplateScore(boardPlayer,player):
     global scorePoints
    
-    scorePoints[player] = []
+    #scorePoints[player] = []
    
 
     for key in tszdic:
@@ -1218,13 +1223,19 @@ def setTemplateScore(boardPlayer,player):
                 doBoardSzab(boardPlayer, a1, b1, tsz[key],scorePoints[player])
        
     if player == Player2:
-        doBoardSzabBand(boardPlayer, 4, 2, tszbl4G2,scorePoints[player], LEFT)
-        doBoardSzabBand(boardPlayer, 4, 2, tszbr4G2,scorePoints[player], RIGHT)
-        doBoardSzabBand(boardPlayer, 2, 4, tszbt4G2,scorePoints[player], TOP)
-        doBoardSzabBand(boardPlayer, 2, 4, tszbd4G2,scorePoints[player], DOWN)
+        doBoardSzabBand(boardPlayer, 4, 4, tszbl4G2,scorePoints[player], LEFT)
+        doBoardSzabBand(boardPlayer, 4, 4, tszbr4G2,scorePoints[player], RIGHT)
+        doBoardSzabBand(boardPlayer, 4, 4, tszbt4G2,scorePoints[player], TOP)
+        doBoardSzabBand(boardPlayer, 4, 4, tszbd4G2,scorePoints[player], DOWN)
+
+        doBoardSzab(boardPlayer, 3, 3, tszb2,scorePoints[player])
+        #doBoardSzab(boardPlayer, 3, 3, tszbr2,scorePoints[player],True)
 
     else:
         doBoardSzab(boardPlayer, 3, 3, tszatr,scorePoints[player],True)
+
+   
+   
 
 
 def BotCircuits(player,cpy_board,x,y):
@@ -1244,7 +1255,7 @@ def BotCircuits(player,cpy_board,x,y):
         col = Player1 if player == Player2 else Player2
      
 
-        for dot in ListCIPS[col]:
+        """ for dot in ListCIPS[col]:
             if arr_b[dot[0]][dot[1]] == player:
                 arr_b[dot[0]][dot[1]] = 0
 
@@ -1253,7 +1264,7 @@ def BotCircuits(player,cpy_board,x,y):
 
             tb = dot[0]
             if arr_b[tb[0]][tb[1]] == player:
-                arr_b[tb[0]][tb[1]] = 0
+                arr_b[tb[0]][tb[1]] = 0 """
        
        
         if i == 0:
@@ -1321,11 +1332,17 @@ def maxScore(score):
 
         for j in range(len(score)):
 
-            if suma < score[j][1]:
+            if suma < score[j][1] and score[j][1] > 0:
                 suma = score[j][1]
                 tb = score[j][0]
+               
                 scx = tb[0]
                 scy = tb[1]
+                if isinstance(scx, list):
+                    scx = tb[0][0]
+                if isinstance(scy, list):
+                    scy = tb[0][1]
+                   
                 templ = copy.deepcopy(score[j][2])
            
         return [scx,scy,suma, templ]
@@ -1353,8 +1370,8 @@ def getmaxScoreWs(arr_cpy, player):
    
     (x,y, maxsc,tem) = maxScore(sc)
    
-   
-    if x >= 0:
+
+    if x >= 0 and y >=0:
         return [x,y,maxsc,tem]
     else:
         return [-1,-1,-1,-1]
@@ -1366,7 +1383,7 @@ def randomWs():
 
     for i in range(ROWS):
         for j in range(COLS):
-            if board[i][j] == 0 and [i,j] not in ListAllPS:
+            if board[i][j] == 0 and canMove(i,j):
                 freePoints.append([i,j])
            
     if len(freePoints) == 0:    
@@ -1377,21 +1394,477 @@ def randomWs():
     row = freePoints[n][0]
 
     return [row, column]
+
+
+
+
+def setZeroScoreNeg(score, scoreneg, val):
+       
+        for j in range(len(score)):
+            tb = score[j][0]
+            suma = score[j][1]
+            if [tb[0],tb[1]] in scoreneg and suma < val:
+                #print("Jest reset ",tb[0]," ",tb[1])
+                score[j][1] = 0
+
+
+
+
+
+def neighbourPoints3P(matrix, player, score):
+
+    point2 = []
+    arr_cpy = copy.deepcopy(matrix)
+
+    all_points = ListCIPS[Player1] + ListCIPS[Player2]
+
+
+#zmiana na 3
+    def delDuplicate3(board):
+        uniq = []
+
+        for i in board:
+            j = []
+            j.extend([i[2],i[1],i[0]])
+            if not i in uniq and j not in uniq:
+                uniq.append(i)
+       
+        return uniq
+
+    for i in range(ROWS):
+        for j in range(COLS):
+            if [i,j] in all_points:
+                continue
+
+            if arr_cpy[i][j] == player:
+               
+#ok
+                if(i > 4 and j > 0 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-1] == 0 and arr_cpy[i-3][j-1] == 0 and (arr_cpy[i-4][j] == player or arr_cpy[i-4][j-1] == player or (j-2 >= 0 and arr_cpy[i-4][j-2] == player))):
+                    if [i-1,j-1] not in all_points and [i-2,j-1] not in all_points  and [i-3,j-1] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-1],[i-3,j-1]])  
+#ok
+                if(i < ROWS-4 and arr_cpy[i+1][j-1] == 0 and arr_cpy[i+2][j-1] == 0 and arr_cpy[i+3][j-1] == 0 and (arr_cpy[i+4][j-1] == player or j-2 >=0 and arr_cpy[i+4][j-2] == player)):
+                    if [i+1,j-1] not in all_points and [i+2,j-1] not in all_points and [i+3,j-1] not in all_points:
+                        point2.append([[i+1,j-1],[i+2,j-1],[i+3,j-1]])
+#ok                  
+                if(i < ROWS-4 and arr_cpy[i+1][j] == 0 and arr_cpy[i+2][j] == 0 and arr_cpy[i+3][j] == 0 and (arr_cpy[i+4][j] == player or ((j > 0 and arr_cpy[i+4][j-1] == player) or (j < COLS-1 and arr_cpy[i+4][j+1] == player)))):
+                    if [i+1,j] not in all_points and [i+2,j] not in all_points and [i+3,j] not in all_points:
+                        point2.append([[i+1,j],[i+2,j],[i+3,j]])
+#ok
+                if(i > 4 and arr_cpy[i-1][j] == 0 and arr_cpy[i-2][j] == 0 and arr_cpy[i-3][j] == 0 and ((j > 0 and arr_cpy[i-4][j-1] == player) or (j < COLS -1 and arr_cpy[i-4][j+1] == player))):
+                    if [i-1,j] not in all_points and [i-2,j] not in all_points  and [i-3,j] not in all_points:
+                        point2.append([[i-1,j],[i-2,j],[i-3,j]])
+#ok
+                if(i < ROWS-4 and j < COLS-1 and arr_cpy[i+1][j+1] == 0 and arr_cpy[i+2][j+1] == 0 and arr_cpy[i+3][j+1] == 0 and ((arr_cpy[i+4][j] == player) or (j < COLS -1 and arr_cpy[i+4][j+1] == player) or (j > 0 and arr_cpy[i+4][j-1] == player))):
+                    if [i+1,j+1] not in all_points and [i+2,j+1] not in all_points and [i+3,j+1] not in all_points:
+                        point2.append([[i+1,j+1],[i+2,j+1],[i+3,j+1]])
+
+#ok
+                if(i >= 4 and j >= 1 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-1] == 0 and arr_cpy[i-3][j-1] == 0 and ((arr_cpy[i-4][j-1] == player) or (j >= 2 and arr_cpy[i-4][j-2] == player))):
+                    if [i-1,j-1] not in all_points and [i-2,j-1] not in all_points and [i-3,j-1] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-1],[i-3,j-1]])
+
+                 
+                if(j > 4 and arr_cpy[i][j-1] == 0 and arr_cpy[i][j-2] == 0 and arr_cpy[i][j-3] == 0 and arr_cpy[i][j-4] == player):
+                    if [i,j-1] not in all_points and [i,j-2] not in all_points and [i,j-3] not in all_points:
+                        point2.append([[i,j-1],[i,j-2],[i,j-3]])
+
+                if(j > 4 and i > 0 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-1][j-2] == 0 and arr_cpy[i-1][j-3] == 0 and arr_cpy[i][j-4] == player):
+                    if [i-1,j-1] not in all_points and [i-1,j-2] not in all_points and [i-1,j-3] not in all_points:
+                        point2.append([[i-1,j-1],[i-1,j-2],[i-1,j-3]])
+
+                if(j > 4 and i < ROWS-1 and arr_cpy[i+1][j-1] == 0 and arr_cpy[i+1][j-2] == 0 and arr_cpy[i+1][j-3] == 0 and arr_cpy[i][j-4] == player):
+                    if [i+1,j-1] not in all_points and [i+1,j-2] not in all_points and [i+1,j-3] not in all_points:
+                        point2.append([[i+1,j-1],[i+1,j-2],[i+1,j-3]])              
+               # diadonal
+                if(i > 4 and j > 4 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-2] == 0 and arr_cpy[i-3][j-3] == 0 and (arr_cpy[i-4][j-4] == player or arr_cpy[i-4][j-3] == player)):
+                    if [i-1,j-1] not in all_points and [i-2,j-2] not in all_points and [i-3,j-3] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-2],[i-3,j-3]])
+
+                if(i < ROWS-4 and j < COLS-4 and arr_cpy[i+1][j+1] == 0 and arr_cpy[i+2][j+2] == 0 and arr_cpy[i+3][j+3] == 0 and (arr_cpy[i+4][j+4] == player or arr_cpy[i+4][j+3] == player)):
+                    if [i+1,j+1] not in all_points and [i+2,j+2] not in all_points and [i+3,j+3] not in all_points:
+                        point2.append([[i+1,j+1],[i+2,j+2],[i+3,j+3]])
+
+               
    
+    point3 = delDuplicate3(point2)
+   
+
+    for key in point3:
+        arr_cpy = copy.deepcopy(matrix)
+        circle = []
+        tab = []
+
+        i = key[0]
+        j = key[1]
+        k = key[2]
+        x = arr_cpy[i[0]][i[1]]
+        y = arr_cpy[j[0]][j[1]]
+        z = arr_cpy[k[0]][k[1]]
+
+        arr_cpy[i[0]][i[1]] = player
+        arr_cpy[j[0]][j[1]] = player
+        arr_cpy[k[0]][k[1]] = player
+
+        circle = BotCircuits(player,arr_cpy,i[0],i[1])
+
+        if circle:
+            for key in circle:
+                if key in all_points:
+                    circle = []
+
+        if circle:  
+            #sc = float(len(circle)) + 0.65
+            sc =  0.75
+            szb = [3]
+            tab.append([i[0],i[1]])
+            tab.extend([sc])
+            tab.append(szb)
+            score.append(tab)
+
+
+        arr_cpy[i[0]][i[1]] = x
+        arr_cpy[j[0]][j[1]] = y
+        arr_cpy[k[0]][k[1]] = z
+
+
+
+
+
+def neighbourPoints2P(matrix, player, score):
+
+    point2 = []
+    arr_cpy = copy.deepcopy(matrix)
+
+    all_points = ListCIPS[Player1] + ListCIPS[Player2]
+
+
+    def delDuplicate2(board):
+        uniq = []
+
+        for i in board:
+            j = []
+            j.extend([i[1],i[0]])
+            if not i in uniq and j not in uniq:
+                uniq.append(i)
+       
+        return uniq
+
+    for i in range(ROWS):
+        for j in range(COLS):
+            if [i,j] in all_points:
+                continue
+
+            if arr_cpy[i][j] == player:
+                if(i > 2 and arr_cpy[i-1][j] == 0 and arr_cpy[i-2][j] == 0 and arr_cpy[i-3][j] == player):
+                    if [i-1,j] not in all_points and [i-2,j] not in all_points:
+                        point2.append([[i-1,j],[i-2,j]])
+                    #tu
+                    if i > 1 and j > 0 and [i-1,j-1] not in all_points and [i-2,j-1] not in all_points:
+                        if arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-1] == 0:
+                            point2.append([[i-1,j-1],[i-2,j-1]])
+                    if i > 1 and j < COLS-2 and [i-1,j+1] not in all_points and [i-2,j+1] not in all_points:
+                        if arr_cpy[i-1][j+1] == 0 and arr_cpy[i-2][j+1] == 0:
+                            point2.append([[i-1,j+1],[i-2,j+1]])
+                   
+                """ if(i < ROWS-3 and arr_cpy[i+1][j] == 0 and arr_cpy[i+2][j] == 0 and arr_cpy[i+3][j] == player):
+                    if [i+1,j] not in all_points and [i+2,j] not in all_points:
+                        point2.append([[i+1,j],[i+2,j]]) """
+                 
+                if(j > 2 and arr_cpy[i][j-1] == 0 and arr_cpy[i][j-2] == 0 and arr_cpy[i][j-3] == player):
+                    if [i,j-1] not in all_points and [i,j-2] not in all_points:
+                        point2.append([[i,j-1],[i,j-2]])
+                    #tu
+                    if i > 0 and j > 1 and [i-1,j-1] not in all_points and [i-1,j-2] not in all_points:
+                        if arr_cpy[i-1][j-1] == 0 and arr_cpy[i-1][j-2] == 0:
+                            point2.append([[i-1,j-1],[i-1,j-2]])
+                    if i < ROWS-1 and j > 1 and [i+1,j-1] not in all_points and [i+1,j-2] not in all_points:
+                        if arr_cpy[i+1][j-1] == 0 and arr_cpy[i+1][j-2] == 0:
+                            point2.append([[i+1,j-1],[i+1,j-2]])
+
+               
+                """ if(j < COLS-3 and arr_cpy[i][j+1] == 0 and arr_cpy[i][j+2] == 0 and arr_cpy[i][j+3] == player):
+                    if [i,j+1] not in all_points and [i,j+2] not in all_points:
+                        point2.append([[i,j+1],[i,j+2]]) """
+                 
+                if(i > 1 and j > 1 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-2] == 0 and ((i > 2 and j > 2 and arr_cpy[i-3][j-3] == player) or (i > 2 and arr_cpy[i-3][j-2] == player))):
+                    if [i-1,j-1] not in all_points and [i-2,j-2] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-2]])
+               
+                if(i < ROWS-2 and j < COLS-2 and arr_cpy[i+1][j+1] == 0 and arr_cpy[i+2][j+2] == 0 and ((i < ROWS-3 and j < COLS-3 and arr_cpy[i+3][j+3] == player) or (i < ROWS-3 and arr_cpy[i+3][j+2] == player))):
+                    if [i+1,j+1] not in all_points and [i+2,j+2] not in all_points:
+                        point2.append([[i+1,j+1],[i+2,j+2]])
+                #dotąd
+                   
+                if(i < ROWS-3 and j > 3 and arr_cpy[i+1][j-1] == 0 and arr_cpy[i+2][j-2] == 0 and arr_cpy[i+3][j-3] == player):
+                    if [i+1,j-1] not in all_points and [i+2,j-2] not in all_points:
+                        point2.append([[i+1,j-1],[i+2,j-2]])
+                   
+                if(i > 3 and j < COLS-3 and arr_cpy[i-1][j+1] == 0 and arr_cpy[i-2][j+2] == 0 and arr_cpy[i-3][j+3] == player):
+                    if [i-1,j+1] not in all_points and [i-2,j+2] not in all_points:
+                        point2.append([[i-1,j+1],[i-2,j+2]])
+
+               
+                if(i < ROWS-3 and j > 0 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-1] == 0 and arr_cpy[i-3][j-1] == player):
+                    if [i-1,j-1] not in all_points and [i-2,j-1] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-1]])
+                 
+                if(i < ROWS-3 and j < COLS-2 and arr_cpy[i-1][j+1] == 0 and arr_cpy[i-2][j+1] == 0 and arr_cpy[i-3][j+1] == player):
+                    if [i-1,j+1] not in all_points and [i-2,j+1] not in all_points:
+                        point2.append([[i-1,j+1],[i-2,j+1]])
+               
+                if(i < ROWS-2 and arr_cpy[i-1][j] == 0 and arr_cpy[i-2][j] == 0 and ((i < ROWS-3 and j > 0 and arr_cpy[i-3][j-1] == player) or (i < ROWS-3 and j < COLS-1 and arr_cpy[i-3][j+1] == player))):
+                    if [i-1,j] not in all_points and [i-2,j] not in all_points:
+                        point2.append([[i-1,j],[i-2,j]])
+
+
+                if((j < COLS-2 and i > 0 and arr_cpy[i-1][j+1] == 0 and arr_cpy[i-1][j+2] == 0) and ((j < COLS-3 and arr_cpy[i-1][j+3] == player) or (j < COLS-3 and i > 1 and arr_cpy[i-2][j+3] == player))):
+                    if [i-1,j+1] not in all_points and [i-1,j+2] not in all_points:
+                        point2.append([[i-1,j+1],[i-1,j+2]])
+
+                if(i < ROWS-1 and j < COLS-2 and arr_cpy[i+1][j+1] == 0 and arr_cpy[i+1][j+2] == 0 and ((j < COLS-3 and arr_cpy[i+1][j+3] == player) or (i < ROWS-2 and j < COLS-3 and arr_cpy[i+2][j+3] == player))):
+                    if [i+1,j+1] not in all_points and [i+1,j+2] not in all_points:
+                        point2.append([[i+1,j+1],[i+1,j+2]])
+               
+                if(j < COLS-2 and arr_cpy[i][j+1] == 0 and arr_cpy[i][j+2] == 0 and ((i > 0  and j < COLS-3 and arr_cpy[i-1][j+3] == player) or (i < ROWS-1 and j < COLS-3 and arr_cpy[i+1][j+3] == player))):
+                    if [i,j+1] not in all_points and [i,j+2] not in all_points:
+                        point2.append([[i,j+1],[i,j+2]])
+               
+                if(i > 1 and j > 0 and arr_cpy[i-1][j-1] == 0 and arr_cpy[i-2][j-1] == 0 and ((i > 2 and arr_cpy[i-3][j-1] == player) or ( i > 2 and j > 1 and arr_cpy[i-3][j-2] == player))):
+                    if [i-1,j-1] not in all_points and [i-2,j-1] not in all_points:
+                        point2.append([[i-1,j-1],[i-2,j-1]])
+
+                if(i > 1 and arr_cpy[i-1][j] == 0 and arr_cpy[i-2][j] == 0 and ((i > 2 and j > 0 and arr_cpy[i-3][j-1] == player) or (i > 2 and j < COLS-1 and arr_cpy[i-3][j+1] == player))):
+                    if [i-1,j] not in all_points and [i-2,j] not in all_points:
+                        point2.append([[i-1,j],[i-2,j]])
+
+                if(i > 1 and j < COLS-1 and arr_cpy[i-1][j+1] == 0 and arr_cpy[i-2][j+1] == 0 and ((i > 2 and arr_cpy[i-3][j+1] == player) or (i > 2 and j < COLS-2 and arr_cpy[i-3][j+2] == player))):
+                    if [i-1,j+1] not in all_points and [i-2,j+1] not in all_points:
+                        point2.append([[i-1,j+1],[i-2,j+1]])
+                   
+                   
+
+   
+    point2 = delDuplicate2(point2)
+   
+    for key in point2:
+        arr_cpy = copy.deepcopy(matrix)
+        circle = []
+        tab = []
+
+        i = key[0]
+        j = key[1]
+        x = arr_cpy[i[0]][i[1]]
+        y = arr_cpy[j[0]][j[1]]
+
+        arr_cpy[i[0]][i[1]] = player
+        arr_cpy[j[0]][j[1]] = player
+
+        circle = BotCircuits(player,arr_cpy,i[0],i[1])
+
+        if circle:
+            for key in circle:
+                if key in all_points:
+                    circle = []
+                    break
+
+        if circle:  
+            #sc = float(len(circle)) + 0.75
+            sc = 0.8
+            szb = [2]
+            tab.append([i[0],i[1]])
+            tab.extend([sc])
+            tab.append(szb)
+            score.append(tab)
+
+
+        arr_cpy[i[0]][i[1]] = x
+        arr_cpy[j[0]][j[1]] = y
+
+
+
+def neighbourPoints(matrix, player, score):
+
+    nei = []
+    chkPoints = []
+    arr_cpy = copy.deepcopy(matrix)
+    all_points = []
+    circle = []
+    all_points = circuits_a[Player1] + circuits_a[Player2] + ListCIPS[Player1] + ListCIPS[Player2]
+
+    for i in range(ROWS):
+        for j in range(COLS):
+            point = 0
+            if [i,j] in all_points:
+                continue
+
+            if arr_cpy[i][j] == player:
+                if(i > 0 and arr_cpy[i-1][j] == player): point+=1
+                if(i < ROWS-1 and arr_cpy[i+1][j] == player): point+=1
+                if(j > 0 and arr_cpy[i][j-1] == player): point+=1
+                if(j < COLS-1 and arr_cpy[i][j+1] == player): point+=1
+                if(i > 0 and j > 0 and arr_cpy[i-1][j-1] == player): point+=1
+                if(i < ROWS-1 and j < COLS-1 and arr_cpy[i+1][j+1] == player): point+=1
+                if(i < ROWS-1 and j > 0 and arr_cpy[i+1][j-1] == player): point+=1
+                if(i > 0 and j < COLS-1 and arr_cpy[i-1][j+1] == player): point+=1
+
+                if point <= 4 and point > 0:
+                    nei.append([i,j])
+ 
+
+    for key in nei:
+
+        i = key[0]
+        j = key[1]
+
+        if [i,j] in all_points:
+                continue
+
+        if(i > 0 and arr_cpy[i-1][j] == 0 and [i-1,j] not in all_points): chkPoints.append([i-1,j])
+        if(i < ROWS-1 and arr_cpy[i+1][j] == 0 and [i+1,j] not in all_points): chkPoints.append([i+1,j])
+        if(j > 0 and arr_cpy[i][j-1] == 0 and [i,j-1] not in all_points): chkPoints.append([i,j-1])
+        if(j < COLS-1 and arr_cpy[i][j+1] == 0) and [i,j+1] not in all_points: chkPoints.append([i,j+1])
+        if(i > 0 and j > 0 and arr_cpy[i-1][j-1] == 0 and [i-1,j-1] not in all_points): chkPoints.append([i-1,j-1])
+        if(i < ROWS-1 and j < COLS-1 and arr_cpy[i+1][j+1] == 0 and [i+1,j+1] not in all_points): chkPoints.append([i+1,j+1])
+        if(i < ROWS-1 and j > 0 and arr_cpy[i+1][j-1] == 0 and [i+1,j-1] not in all_points): chkPoints.append([i+1,j-1])
+        if(i > 0 and j < COLS-1 and arr_cpy[i-1][j+1] == 0 and [i-1,j+1] not in all_points): chkPoints.append([i-1,j+1])
+
+
+    chkPoints = delDuplicate(chkPoints)
+       
+    for key in chkPoints:
+        arr_cpy = copy.deepcopy(matrix)
+        circle = []
+        i = key[0]
+        j = key[1]
+        arr_cpy[i][j] = player
+        circle = BotCircuits(player,arr_cpy,i,j)
+        arr_cpy[i][j] = 0
+        dois = False
+
+
+        if circle:
+           
+            if isinstance(circle[0], int):
+
+                print("Jest instancek int")
+                circ = []
+                circ.append(copy.deepcopy(circle))
+                circle = circ
+
+            for key in circle:
+                if key in all_points:
+                    circle = []
+                    break
+       
+       
+            if player == Player2:
+                print("YESSSS player:", player, " lenek: " ,len(circle))
+                sc = len(circle) + 0.2
+                szb = [0]
+                tab.append([i,j])
+                tab.extend([sc])
+                tab.append(szb)
+                score.append(tab)
+                continue
+
+            if player == Player2:
+                print("Jest player2")
+       
+            if player == Player1:
+                print("Jest player1: ", i, ",",j)
+                print("circle= ",circle)
+                circle2 = []
+                if(i > 0 and [i-1,j] in chkPoints):
+                    arr_cpy[i-1][j] = 1
+                    circle2 = BotCircuits(player,arr_cpy,i-1,j)
+
+                    if circle2:
+                        for key in circle2:
+                            if key in all_points:
+                                circle2 = []
+
+                    if circle2:
+                        dois = True
+                        setZeroScore(score,i,j)
+                        setZeroScore(score,i-1,j)
+                    arr_cpy[i-1][j] = 0
+
+                elif(i < ROWS-1 and [i+1,j] in chkPoints):
+                    arr_cpy[i+1][j] = 1
+                    circle2 = BotCircuits(player,arr_cpy,i+1,j)
+
+                    if circle2:
+                        for key in circle2:
+                            if key in all_points:
+                                circle2 = []
+
+                    if circle2:
+                        dois = True
+                        setZeroScore(score,i,j)
+                        setZeroScore(score,i+1,j)
+                    arr_cpy[i+1][j] = 0
+
+                elif(j > 0 and [i,j-1] in chkPoints):
+                    arr_cpy[i][j-1] = 1
+                    circle2 = BotCircuits(player,arr_cpy,i,j-1)
+                       
+                    if circle2:
+                        for key in circle2:
+                            if key in all_points:
+                                circle2 = []
+                    if circle2:
+                        dois = True
+                        setZeroScore(score,i,j)
+                        setZeroScore(score,i,j-1)
+                    arr_cpy[i][j-1] = 0
+                   
+                elif(j < COLS-1 and [i,j+1] in chkPoints):
+                    arr_cpy[i][j+1] = 1
+                    circle2 = BotCircuits(player,arr_cpy,i,j+1)
+                   
+                    if circle2:
+                        for key in circle2:
+                            if key in all_points:
+                                circle2 = []
+
+                    if circle2:
+                        dois = True
+                        setZeroScore(score,i,j)
+                        setZeroScore(score,i,j+1)
+                    arr_cpy[i][j+1] = 0
+       
+       
+        tab = []
+       
+        if circle and player == Player1 and dois:
+           
+            setZeroScore(score,i,j)
+
+        elif circle and player == Player1 and not dois:
+
+            sc = len(circle) + 0.1
+            szb = [0]
+            tab.append([i,j])
+            tab.extend([sc])
+            tab.append(szb)
+            score.append(tab)
+           
+
 
 def addNegScore(arr_cpy):
     score = []
     scPoints = []
 
     doBoardSzab(arr_cpy, 3, 3, tszn3, score)
-    doBoardSzab(arr_cpy, 3, 3, tsznr, score, True, True)
+    doBoardSzab(arr_cpy, 3, 3, tsznr, score, True, True, True)
 
     for key in score:
         scPoints.append(key[0])
    
     return scPoints
 
-def neighbourCircle(arr_cpy, col, x1, y1):
+""" def neighbourCircle(arr_cpy, col, x1, y1):
     circle2 = []
    
     for i in range(4):
@@ -1423,7 +1896,7 @@ def neighbourCircle(arr_cpy, col, x1, y1):
             return circle2
    
 
-    return []
+    return [] """
 
 def findCirc(arr_cpy,player, scorep):
 
@@ -1431,12 +1904,16 @@ def findCirc(arr_cpy,player, scorep):
    
    
 
-    def addToScore(player):
+    def addToScore(player,score):
+       
+        all_points = circuits_a[Player1] + circuits_a[Player2] + ListCIPS[Player1] + ListCIPS[Player2]
 
         if score:
             for pt in score:
-               
+                print(pt)
                 if isinstance(pt[0][0], list) and len(pt[0]) == 2:
+                    print("Szabloniczek: ",pt)
+
                     tmpx = pt[0][0]
                     tmpx2 = pt[0][1]
                     x1 = tmpx[0]
@@ -1449,9 +1926,56 @@ def findCirc(arr_cpy,player, scorep):
                     arr_cpy[x2][y2] = player
 
                     circle = BotCircuits(player,arr_cpy,x2,y2)
+
+                   
+                    if circle:
+                        for key in circle:
+                            if key in all_points:
+                                circle = []
+                                break
+                        print("CIRCLE")
+
+
+                        tab = []
+                        sc = len(circle)
+                        #to jest szablon
+                        szb = pt[2]
+           
+                        if player == Player2:
+                            pt[1] = 0.9
+
+                        n = random.randint(0,1)
+                       
+                        num = pt[0][n]
+                        tab.append(num)
+                        tab.extend([sc])
+                        tab.append(szb)
+                        scorep.append(tab)
+
+                        print("PT= ", pt[0])
+
+                    arr_cpy[x1][y1] = x
+                    arr_cpy[x2][y2] = y
+               
+                """ if isinstance(pt[0][0], list) and len(pt[0]) == 2:
+                    tmpx = pt[0][0]
+                    tmpx2 = pt[0][1]
+                    x1 = tmpx[0]
+                    y1 = tmpx[1]
+                    x2 = tmpx2[0]
+                    y2 = tmpx2[1]
+                    x = arr_cpy[x1][y1]
+                    y = arr_cpy[x2][y2]
+                    arr_cpy[x1][y1] = player
+                    arr_cpy[x2][y2] = player
+
+                    circle = BotCircuits(player,arr_cpy,x2,y2)
+
+                   
            
                     if circle:
-                        
+                        print("Jeseczek łokrążono: ", pt)
+                       
                         tab = []
                         sc = len(circle)
                         #to jest szablon
@@ -1469,10 +1993,10 @@ def findCirc(arr_cpy,player, scorep):
                         scorep.append(tab)
                
                     arr_cpy[x1][y1] = x
-                    arr_cpy[x2][y2] = y
+                    arr_cpy[x2][y2] = y """
 
                
-                elif isinstance(pt[0][0], list) and len(pt[0]) == 3:
+                """ if isinstance(pt[0][0], list) and len(pt[0]) == 3:
 
                     tmpx = pt[0][0]
                     tmpx2 = pt[0][1]
@@ -1509,12 +2033,12 @@ def findCirc(arr_cpy,player, scorep):
                         tab.extend([sc])
                         tab.append(szb)
                         scorep.append(tab)
-               
+                       
                     arr_cpy[x1][y1] = x
                     arr_cpy[x2][y2] = y
-                    arr_cpy[x3][y3] = z
+                    arr_cpy[x3][y3] = z """
            
-                elif isinstance(pt[0][0], int):
+                """ elif isinstance(pt[0][0], int):
                     x1 = pt[0][0]
                     y1 = pt[0][1]
 
@@ -1523,15 +2047,15 @@ def findCirc(arr_cpy,player, scorep):
 
                     circle = BotCircuits(player,arr_cpy,x1,y1)
                     tab = pt
-
+                   
                     if circle:
                         tab[1] = len(circle)
-                        
+                       
                         col = player
                         if player == Player2:
                             col = Player1
 
-                        
+                       
                         circle2 = []
                         arr_cpy[x1][y1] = 0
                         circle2 = neighbourCircle(arr_cpy, col, x1, y1)
@@ -1541,34 +2065,40 @@ def findCirc(arr_cpy,player, scorep):
                             tab[1] = 0
                             for key in circle2:
                                 setZeroScore(scorep,key[0],key[1])
-                                
+                               
 
-                            #-------
                         scorep.append(tab)        
                                        
                    
-                    arr_cpy[x1][y1] = x
+                    arr_cpy[x1][y1] = x """
 
-
-    if player == Player1:
-        doBoardSzab(arr_cpy, 4, 4, tszc4, score)
-        doBoardSzab(arr_cpy, 3, 3, tszc3, score)
-        addToScore(Player1)
-    else:
-        doBoardSzab(arr_cpy, 4, 4, tsza4, score)
-        doBoardSzab(arr_cpy, 5, 5, tsza5, score)
-        doBoardSzab(arr_cpy, 3, 3, tsza3, score)
-        addToScore(Player2)
-         
    
+    #if player == Player1:
+       
+        #doBoardSzab(arr_cpy, 4, 4, tszcra4,score,True, True, False)
+        #addToScore(Player1)
+    #else:
+        #doBoardSzab(arr_cpy, 5, 5, tszcr5,score,True, False, False)
+        #addToScore(Player2)
+    if player == Player2:
+        addToScore(Player2,scorep)
+
+    neighbourPoints3P(arr_cpy, player, scorep)
+    neighbourPoints2P(arr_cpy, player, scorep)
+    neighbourPoints(arr_cpy, player, scorep)
+
+    for i in scorep:
+        if i[1] >= 0.9:
+            print(i)
+
    
 
-def findTra():
+def findTra(br):
     global scoreTra
     scoreTra = []
    
-    doBoardSzab(board, 4, 4, tsztra1, scoreTra,False,False,True)
-    doBoardSzab(board, 3, 3, tsztra, scoreTra,False,False,True)
+    doBoardSzab(br, 4, 4, tsztra1, scoreTra,False,False,True)
+    doBoardSzab(br, 3, 3, tsztra, scoreTra,False,False,True)
    
 
     (x,y, maxsc, tb) = maxScore(scoreTra)
@@ -1588,15 +2118,34 @@ def moveBot(player):
     sc = scorePoints[player]
 
     scoreNeg = addNegScore(arr_tmp)
-
+   
+    setZeroScoreNeg(sc, scoreNeg, 0.9)
 
     def trap_or_rand(scNeg):
 
-        (row,column,sum1) = findTra()
-        if row < 0:
-            (row, column) = randomWs()
-            if [row,column] in scNeg:
-                (row, column) = randomWs()
+        def getxy():
+
+            (x1,y1,sum1) = findTra(arr_tmp)
+            if x1 >= 0:
+                (r, c) = x1, y1
+            else:
+                (r, c) = randomWs()
+           
+            return [r,c]
+
+
+        (row, column) = randomWs()
+        if [row,column] in scNeg:
+            print("Jest SCORE NEG")
+            xy = getxy()
+            row = xy[0]
+            column = xy[1]
+           
+        else:
+            xy = getxy()
+            row = xy[0]
+            column = xy[1]
+
        
         return [row, column]
 
@@ -1604,27 +2153,15 @@ def moveBot(player):
     scWs = getmaxScoreWs(arr_tmp,player)
     column = scWs[1]
     row = scWs[0]
-    suma = float(scWs[2])
-    templatek = scWs[3]
-   
-   
-    if [row,column] in scoreNeg and suma < 0.6:
-       
-        setLessScore(sc,row, column, 0.0)
-        scWs = getmaxScoreWs(arr_tmp,player)
-        column = scWs[1]
-        row = scWs[0]
-        suma = float(scWs[2])
-        templatek = scWs[3]
+    #suma = float(scWs[2])
+    #templatek = scWs[3]
 
-    if row < 0 or not canMove(row,column):
-                             
+    if row < 0 or column < 0 or not canMove(row,column):
+                               
         # jeśli nie ma na szablonach losowo
 
         (row, column) = trap_or_rand(scoreNeg)
-   
-    playerbot = Player2 if player == Player1 else Player1
-    tab = []
+
                
     return [row,column]
 
@@ -1638,16 +2175,15 @@ for key in tszdic:
     tszp[key] = []
     makeSzablon2(T[key],tsz[key])
 
-makeSzablon2(C3,tszc3)
-makeSzablon2(C4,tszc4)
-makeSzablon2(A3,tsza3)
-makeSzablon2(A4,tsza4)
-makeSzablon2(A5,tsza5)
 
 makeSzablon2(NT11,tszn3)
 makeSzablon2(NTR,tsznr)
 
 makeSzablon2(ATR,tszatr)
+
+makeSzablon2(CB2,tszb2)
+
+#makeSzablon2(CBR2,tszbr2)
 
 #szablony do spr. przy bandzie
 makeSzablon2(BA['TBL4x2'],tszbl4G2)
@@ -1729,10 +2265,22 @@ while True: # main loop
                         board[row][column] = Player
                    
                     else: continue
+
+                    scorePoints[Player1] = []
+                    scorePoints[Player2] = []
+
+                    """ setTemplateScore(board,Player)
+                    findCirc(board,Player, scorePoints[Player2])
+                    makeMove(Player,row,column)
+
+                    Player = Player2 if Player == Player1 else Player1 """
                    
                     makeMove(Player,row,column)
-                    setTemplateScore(board,Player2)                                      
-                    findCirc(board,Player, scorePoints[Player2])          
+                    #findCirc(board,Player, scorePoints[Player2])
+                    setTemplateScore(board,Player2)
+                    findCirc(board,Player, scorePoints[Player2])
+                                             
+                             
 
                     Player = Player2
                    
@@ -1750,9 +2298,17 @@ while True: # main loop
                #bot
                     makeMove(Player,row,column)
                     setTemplateScore(board,Player2)
-                    Player = Player1          
-                    #Player = Player2 if Player == Player1 else Player1
-                    #print(ListCIPS)
-                   
+                    Player = Player1
+
+                    #print("score: ", scorePoints[Player2])    
+                    """ Player = Player2 if Player == Player1 else Player1
+                    print(circuits_a) """
+
+                    #circuits_all okrążenie bez kropczyn w środku
+                    #print("circuits_all: ", circuits_a[Player1] , " ! " , circuits_a[Player2])
+                    print("circuits: ", circuits[Player1] , " ! " , circuits[Player2])
+                    """ all_points = circuits_a[Player1] + circuits_a[Player2] + ListCIPS[Player1] + ListCIPS[Player2]
+                    print("list: ", all_points) """
+
 
     pygame.display.update()
